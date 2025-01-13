@@ -1,5 +1,7 @@
 package com.example.pamfirebase.ui.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pamfirebase.model.Mahasiswa
@@ -9,23 +11,41 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class HomeViewModel (
-    private val mhs: RepositoryMhs
+    private val repoMhs: RepositoryMhs
 ): ViewModel(){
+
+    var mhsUiState: HomeUiState by mutableStateOf(HomeUiState.Loading)
+        private set
+
+    init {
+        getMhs()
+    }
+
     fun getMhs(){
         viewModelScope.launch{
-            mhs.getAllMahasiswa().onStart{
+            repoMhs.getAllMahasiswa().onStart{
                 mhsUiState = HomeUiState.Loading
             }
-                .catch{
-                    mhsUiState = HomeUiState.Error(it)
+                .catch{ e->
+                    mhsUiState = HomeUiState.Error(e = e)
                 }
-                .collect{
-                    mhsUiState = if(it.isEmpty()){
+                .collect{mhsList ->
+                    mhsUiState = if(mhsList.isEmpty()){
                         HomeUiState.Error(Exception("Belum ada data mahasiswa"))
                     } else{
-                        HomeUiState.Success
+                        HomeUiState.Success(mhsList)
                     }
                 }
+        }
+    }
+
+    fun deleteMhs(mahasiswa: Mahasiswa){
+        viewModelScope.launch {
+            try {
+                repoMhs.deleteMhs(mahasiswa)
+            }catch (e: Exception){
+                mhsUiState = HomeUiState.Error(e)
+            }
         }
     }
 }
