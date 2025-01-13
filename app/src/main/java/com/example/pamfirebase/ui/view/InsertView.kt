@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+//import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pamfirebase.ui.viewmodel.FormErrorState
 import com.example.pamfirebase.ui.viewmodel.FormState
 import com.example.pamfirebase.ui.viewmodel.InsertUiState
@@ -262,6 +263,51 @@ fun FormMahasiswa(
         )
         Text(
             text = errorState.angkatan ?:"",
+            color = Color.Red
+        )
+//        penambahan komponen baru
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = mahasiswaEvent.judul_skripsi,
+            onValueChange = {
+                onValueChange(mahasiswaEvent.copy(judul_skripsi = it))
+            },
+            label = { Text(text = "Judul Skripsi") },
+            isError = errorState.judul_skripsi != null,
+            placeholder = { Text("Masukkan Judul Skripsi") },
+        )
+        Text(
+            text = errorState.judul_skripsi ?:"",
+            color = Color.Red
+        )
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = mahasiswaEvent.dosen1,
+            onValueChange = {
+                onValueChange(mahasiswaEvent.copy(dosen1 = it))
+            },
+            label = { Text(text = "Judul Skripsi") },
+            isError = errorState.dosen1 != null,
+            placeholder = { Text("Masukkan Dosen1") },
+        )
+        Text(
+            text = errorState.dosen1 ?:"",
+            color = Color.Red
+        )
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = mahasiswaEvent.dosen2,
+            onValueChange = {
+                onValueChange(mahasiswaEvent.copy(judul_skripsi = it))
+            },
+            label = { Text(text = "Dosen2") },
+            isError = errorState.dosen2 != null,
+            placeholder = { Text("Masukkan Dosen2") },
+        )
+        Text(
+            text = errorState.dosen2 ?:"",
             color = Color.Red
         )
     }

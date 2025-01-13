@@ -38,6 +38,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+//import androidx.lifecycle.viewmodel.compose.viewModel
+//import com.example.pamfirebase.R
 import com.example.pamfirebase.model.Mahasiswa
 import com.example.pamfirebase.ui.viewmodel.HomeUiState
 import com.example.pamfirebase.ui.viewmodel.HomeViewModel
@@ -168,7 +170,7 @@ fun OnError(retryAction: () -> Unit, modifier: Modifier = Modifier){
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_connection_error),
+            painter = painterResource(id = R.drawable.error),
             contentDescription = ""
         )
         Text(text = stringResource(R.string.loading_failed), modifier.padding(16.dp))
